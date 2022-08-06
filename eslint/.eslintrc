@@ -1,0 +1,54 @@
+module.exports = {
+  root: true,
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
+  },
+  extends: [
+    'plugin:vue/vue3-recommended',
+    'eslint:recommended',
+    '@vue/typescript/recommended',
+    '@vue/prettier',
+    // ↓↓vue × prettierの推奨?設定だが、functionsとの共有時にになぜかエラーでるので無効化
+    // "@vue/prettier/@typescript-eslint"
+  ],
+  parserOptions: {
+    ecmaVersion: 2021,
+  },
+  plugins: ['prettier', 'import'],
+  rules: {
+    'vue/multi-word-component-names': 'off',
+    'max-len': ['warn', { code: 140 }],
+    'comma-dangle': ['error', 'always-multiline'],
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    'import/order': [
+      'error',
+      {
+        groups: [
+          'builtin', // 組み込みモジュール
+          'external', // npmでインストールした外部ライブラリ
+          'internal', // 自作モジュール
+          ['parent', 'sibling'],
+          'object',
+          'type',
+          'index',
+        ],
+        'newlines-between': 'always', // グループ毎にで改行を入れる
+        pathGroupsExcludedImportTypes: ['builtin'],
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true, // 小文字大文字を区別する
+        },
+        pathGroups: [
+          {
+            pattern: '@alias/**',
+            group: 'parent',
+            position: 'before',
+          },
+        ],
+      },
+    ],
+  },
+}
+
